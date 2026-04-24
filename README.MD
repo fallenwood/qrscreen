@@ -1,0 +1,1 @@
+> Create a rust program with winui, it should be a tray at nomal state, and when left click on the tray, it should let user select a part of screen and recognize the pr code from the selection, when right click on the tray it should show menu to show history and quit app, it should also support esc or right click to quit selection mode
