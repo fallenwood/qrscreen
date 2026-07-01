@@ -9,6 +9,7 @@ use windows::core::*;
 use windows::Win32::Foundation::*;
 use windows::Win32::Graphics::Gdi::*;
 use windows::Win32::System::LibraryLoader::GetModuleHandleW;
+use windows::Win32::UI::HiDpi::*;
 use windows::Win32::UI::Shell::*;
 use windows::Win32::UI::WindowsAndMessaging::*;
 
@@ -34,9 +35,17 @@ pub fn get_main_hwnd() -> HWND {
 const QR_FOUND: usize = 1;
 const QR_NOT_FOUND: usize = 2;
 
+unsafe fn enable_dpi_awareness() {
+    let _ = SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+    let _ = SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE);
+    let _ = SetProcessDPIAware();
+}
+
 // ── Entry point ─────────────────────────────────────────────────────────────
 fn main() -> Result<()> {
     unsafe {
+        enable_dpi_awareness();
+
         let hinstance: HINSTANCE = GetModuleHandleW(None)?.into();
         let class = w!("QRScreenMain");
 
